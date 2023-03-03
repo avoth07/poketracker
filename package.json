@@ -1,0 +1,19 @@
+{
+  "name": "poketrackerapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "npm": "8.11.0",
+    "node": "16.16.0"
+  },
+  "scripts": {
+    "start:client": "cd client && npm run dev",
+    "setup:client": "cd client && npm install",
+    "start:server": "cd server && npm run start",
+    "setup:server": "cd server && npm install && cp .env.example .env && npm run migrate-db",
+    "start:studio": "cd server && npm run start:studio",
+    "migrate-db": "cd server && npm run migrate-db",
+    "seed-db": "cd server && npm run seed-db"
+  }
+}
