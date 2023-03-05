@@ -15,5 +15,12 @@
     "start:studio": "cd server && npm run start:studio",
     "migrate-db": "cd server && npm run migrate-db",
     "seed-db": "cd server && npm run seed-db"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.11",
+    "@mui/styles": "^5.11.11",
+    "classnames": "^2.3.2"
   }
 }
