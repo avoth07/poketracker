@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles/pokemon-types.module.css';
 import classNames from 'classnames';
 import { pokemonData } from './data/pokemon';
+//import getPokemonData from '../../server/prisma/pokemonService'
 
 interface Pokemon {
   name: string;
@@ -14,13 +15,25 @@ interface Pokemon {
 
 const PokemonList: React.FC = () => {
   //set state and filter options
+  // const [pokemonData, setPokemonData] = useState<Pokemon[]>([]);
   const [caughtPokemon, setCaughtPokemon] = useState<number[]>([]);
   const [filterPokemon, setFilterPokemon] = useState<string>('');
   const [type1Filter, setType1Filter] = useState<string>('Any');
   const [type2Filter, setType2Filter] = useState<string>('Any');
   const [typeOrderChecked, setTypeOrderChecked] = useState<boolean>(true);
 
-  //gather  all pokemon types from both type 1 and type 2 values
+//  Fetch pokemon data when component mounts and store in state pokemonData
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data: any = await getPokemonData();
+  //     setPokemonData(data);
+  //   };
+  //   fetchData();
+  // },
+  // []);
+
+
+  //gather all pokemon types from both type 1 and type 2 values
   const uniqueTypes: any[] = Array.from(new Set(pokemonData.map((pokemon: Pokemon) => pokemon.type_1 || pokemon.type_2)));
   
   const handleFilterChange = (event: any) => {

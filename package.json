@@ -17,6 +17,7 @@
     "seed-db": "cd server && npm run seed-db"
   },
   "dependencies": {
+    "@mui/material": "^5.11.11",
     "classnames": "^2.3.2",
     "react": "^18.2.0"
   }
