@@ -15,23 +15,11 @@ interface Pokemon {
 
 const PokemonList: React.FC = () => {
   //set state and filter options
-  // const [pokemonData, setPokemonData] = useState<Pokemon[]>([]);
   const [caughtPokemon, setCaughtPokemon] = useState<number[]>([]);
   const [filterPokemon, setFilterPokemon] = useState<string>('');
   const [type1Filter, setType1Filter] = useState<string>('Any');
   const [type2Filter, setType2Filter] = useState<string>('Any');
   const [typeOrderChecked, setTypeOrderChecked] = useState<boolean>(true);
-
-//  Fetch pokemon data when component mounts and store in state pokemonData
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data: any = await getPokemonData();
-  //     setPokemonData(data);
-  //   };
-  //   fetchData();
-  // },
-  // []);
-
 
   //gather all pokemon types from both type 1 and type 2 values
   const uniqueTypes: any[] = Array.from(new Set(pokemonData.map((pokemon: Pokemon) => pokemon.type_1 || pokemon.type_2)));
@@ -96,7 +84,7 @@ const PokemonList: React.FC = () => {
   const percentage = Math.round((caughtCount / totalCount) * 100);
 
 return (
-<div className='flex flex-row flex-wrap space-x-5 space-y-3'>
+<div id = "root" className='flex flex-row flex-wrap space-x-5 space-y-3'>
   <div className="mb-4 block flex flex-col w-1/3 float-left">
     <label className="text-gray-700 text-sm font-bold mb-2" htmlFor="pokemon-list-filter">
       Filter By Name or PokeDex Number
@@ -111,18 +99,17 @@ return (
       />
     </div>
   </div>
-  <div className="flex flex-row items-center">
+  <div id = "primary-secondary-selector" className="flex flex-row items-center">
     <label className="text-gray-700 text-sm font-bold mr-2">Strict Types:</label>
     <input type="checkbox" checked={typeOrderChecked} onChange={handleCheckboxChanged} id="type-order-filter" />
   </div>
-    <div className="flex flex-row space-x-4">
+    <div id = "type-selectors" className="flex flex-row space-x-4">
       <div className="flex flex-col">
         <label className="text-gray-700 text-sm font-bold mb-2" htmlFor="type-1-filter">Type 1</label>
         <select
           onChange={handleType1FilterChange}
           id="type-1-filter"
-          className="block w-70 h-10 rounded-md border-gray-300 bg-white text-gray-900 border pl-3 pr-10 py-2 text-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-        >
+          className="block w-70 h-10 rounded-md border-gray-300 bg-white text-gray-900 border pl-3 pr-10 py-2 text-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
           <option>Any</option>
           {uniqueTypes.map((type1: string) => (
           <option className="capitalize" key={type1} value={type1}>
@@ -137,8 +124,7 @@ return (
           onChange={handleType2FilterChange}
           defaultValue="Any"
           id="type-2-filter"
-          className="block w-70 h-10 rounded-md border-gray-300 bg-white text-gray-900 border pl-3 pr-10 py-2 text-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-        >
+          className="block w-70 h-10 rounded-md border-gray-300 bg-white text-gray-900 border pl-3 pr-10 py-2 text-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
         <option value="Any">Any</option>
         {uniqueTypes.map((type2: string) => (
           <option className="capitalize" key={type2} value={type2}>{type2}</option>
@@ -147,7 +133,7 @@ return (
       </div>
     </div>
 
-<div className="block w-full">
+<div id="catchPercent" className="block w-full">
   {totalCount > 0 && (
     <p>You have caught <strong> {caughtCount} </strong> out of <strong>{totalCount}</strong>, or <strong>~{percentage}%</strong></p>
   )}
@@ -165,7 +151,7 @@ return (
         </svg>
     </div>
 
-    <div className="flex-1 text-center m-5">
+    <div id = 'pokemonCardContent' className="flex-1 text-center m-5">
       <p className='capitalize font-bold'>{pokemon.name}</p>
       <p className='font-bold'>#: {pokemon.dex_number}</p>
       <img className='pokemon-media mx-auto' src={pokemon.image_url} title={pokemon.name} />
@@ -174,7 +160,7 @@ return (
       {/*hide type 2 icon if null*/}
       {pokemon.type_2 ? (
 
-        <div className={classNames(styles['type-icon'], styles[String(pokemon.type_2)])} />
+      <div className={classNames(styles['type-icon'], styles[String(pokemon.type_2)])} />
       ) : null}
       </div>
     
