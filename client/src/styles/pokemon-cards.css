@@ -7,7 +7,9 @@
 .wider-pokemon {
   width: 50%;
 }
-
+.card-wrapper {
+  width: 300px;
+}
 .pokemon-card {
   width: 250px;
   height: 200px;
@@ -16,8 +18,8 @@
 }  
 
 .pokemon-media {
-  width: 75px;
-  height: 75px;
+  width: 100px;
+  height: 100px;
 }  
 
 .pokemon-typography {
