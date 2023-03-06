@@ -1,0 +1,26 @@
+.root {
+   display: 'flex';
+   flex-direction: 'row';
+   flex-wrap: 'wrap';
+}
+
+.wider-pokemon {
+  width: 50%;
+}
+
+.pokemon-card {
+  width: 250px;
+  height: 200px;
+  margin: 10px;
+  border: 1px solid black;
+}  
+
+.pokemon-media {
+  width: 75px;
+  height: 75px;
+}  
+
+.pokemon-typography {
+  text-transform: capitalize;
+  font-weight: bold;
+}  

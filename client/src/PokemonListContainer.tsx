@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/styles';
 import styles from './styles/pokemon-types.module.css';
 import classNames from 'classnames';
-import { Card, CardContent, CardMedia, NativeSelect, Typography } from '@mui/material';
 import { pokemonData } from './data/pokemon';
 
 interface Pokemon {
@@ -13,28 +11,6 @@ interface Pokemon {
   image_url: string;
   isCaught?: boolean;
 }
-
-const Root = styled('div')({
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-});
-
-const PokemonCard = styled(Card)({
-  width: 225,
-  height: 200,
-  margin: 10,
-  border: 1,
-});
-
-const PokemonMedia = styled(CardMedia)({
-  height: 75,
-  width: 75,
-});
-
-const PokemonTypography = styled(Typography)({
-  textTransform: 'capitalize',
-})
 
 const PokemonList: React.FC = () => {
   //set state and filter options
@@ -106,13 +82,12 @@ const PokemonList: React.FC = () => {
   const totalCount = filteredList.length;
   const percentage = Math.round((caughtCount / totalCount) * 100);
 
-  return (
-    <Root>
-<div className="mb-4 block flex flex-col w-1/3 float-left">
-  <label className="text-gray-700 text-sm font-bold mb-2" htmlFor="pokemon-list-filter">
-    Filter By Name or PokeDex Number
-  </label>
-  <div className="flex">
+return (
+<div className='flex flex-row flex-wrap space-x-5 space-y-3'>
+  <div className="mb-4 block flex flex-col w-1/3 float-left">
+    <label className="text-gray-700 text-sm font-bold mb-2" htmlFor="pokemon-list-filter">
+      Filter By Name or PokeDex Number
+    </label>
     <div className="flex-grow mr-2">
       <input 
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -123,52 +98,41 @@ const PokemonList: React.FC = () => {
       />
     </div>
   </div>
-</div>
-<div className="mb-4 block flex flex-col w-1/3 items-center">
-  <div className="inline-flex flex-row space-x-3">
-    <label className="text-gray-700 text-sm font-bold" htmlFor="type-order-filter">Strict Primary/Secondary:</label>
+  <div className="flex flex-row items-center">
+    <label className="text-gray-700 text-sm font-bold mr-2">Strict Types:</label>
     <input type="checkbox" checked={typeOrderChecked} onChange={handleCheckboxChanged} id="type-order-filter" />
   </div>
-  <div className="inline-flex flex-row">
-    <div className="inline-flex flex-col">
-        <label className="text-gray-700 text-sm font-bold" htmlFor="type-1-filter">Type 1</label>
-        <NativeSelect
+    <div className="flex flex-row space-x-4">
+      <div className="flex flex-col">
+        <label className="text-gray-700 text-sm font-bold mb-2" htmlFor="type-1-filter">Type 1</label>
+        <select
           onChange={handleType1FilterChange}
-          inputProps={{
-            name: "type_1",
-            id: "type-1-filter",
-            style: { backgroundColor: "#fff", border: "1px solid #ccc", borderRadius: "4px", padding: "6px 10px" }
-          }}
+          id="type-1-filter"
+          className="block w-70 h-10 rounded-md border-gray-300 bg-white text-gray-900 border pl-3 pr-10 py-2 text-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         >
           <option>Any</option>
           {uniqueTypes.map((type1: string) => (
-            <option className="capitalize" key={type1} value={type1}>
-              {type1}
-            </option>
+          <option className="capitalize" key={type1} value={type1}>
+            {type1}
+          </option>
           ))}
-        </NativeSelect>
-        </div>
-        <div className="inline-flex flex-col px-6">
-        <label className="text-gray-700 text-sm font-bold" htmlFor="type-2-filter">Type 2</label>
-        <NativeSelect
+        </select>
+      </div>
+      <div className="flex flex-col">
+        <label className="text-gray-700 text-sm font-bold mb-2" htmlFor="type-2-filter">Type 2</label>
+        <select
           onChange={handleType2FilterChange}
           defaultValue="Any"
-          inputProps={{
-            name: "type_2",
-            id: "type-2-filter",
-            style: { backgroundColor: "#fff", border: "1px solid #ccc", borderRadius: "4px", padding: "6px 10px" }
-          }}
+          id="type-2-filter"
+          className="block w-70 h-10 rounded-md border-gray-300 bg-white text-gray-900 border pl-3 pr-10 py-2 text-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         >
-          <option value="Any">Any</option>
-          {uniqueTypes.map((type2: string) => (
-            <option className="capitalize" key={type2} value={type2}>
-              {type2}
-            </option>
+        <option value="Any">Any</option>
+        {uniqueTypes.map((type2: string) => (
+          <option className="capitalize" key={type2} value={type2}>{type2}</option>
           ))}
-        </NativeSelect>
-        </div>
+        </select>
+      </div>
     </div>
-  </div>
 
 <div className="block w-full">
   {totalCount > 0 && (
@@ -178,31 +142,33 @@ const PokemonList: React.FC = () => {
     <p>No Pokémon fit your filter criteria.</p>
   )}
 </div>
+{filteredList.map((pokemon: Pokemon) => (
+  <div className='pokemon-card rounded-md flex items-center p-3' key={pokemon.dex_number} style={{ backgroundColor: pokemon.isCaught ? 'lightgreen' : 'white' }}>
+    <div id="pokeball" className="m-1">
+    <svg version="1.1" width="25" height="25" viewBox="0 0 25 25" role="button" className={pokemon.isCaught ?  "animate-wiggle" : ""} onClick={() => handleCatchPokemon(pokemon.dex_number)}>
+          <path fill="#FFF" stroke="#000" strokeWidth="2" strokeMiterlimit="10" d="M24 12.5C24 18.85 18.85 24 12.5 24c-4.92 0-9.11-3.09-10.75-7.42l8.57-3.29c.31.9 1.17 1.54 2.18 1.54 1.28 0 2.33-1.05 2.33-2.33 0-.31-.061-.6-.17-.88l8.55-3.3c.51 1.3.79 2.7.79 4.18z"></path>
+          <path fill={pokemon.isCaught ? "red" : "gray"} stroke="#000" strokeWidth="2" strokeMiterlimit="10" d="M23.21 8.32l-8.55 3.3a2.349 2.349 0 0 0-2.16-1.45c-1.28 0-2.33 1.05-2.33 2.33 0 .28.05.54.15.79l-8.57 3.29C1.26 15.31 1 13.94 1 12.5 1 6.15 6.15 1 12.5 1c4.88 0 9.05 3.04 10.71 7.32z"></path>
+          <path fill="#FFF" d="M14.83 12.5c0 1.28-1.05 2.33-2.33 2.33-1.01 0-1.87-.64-2.18-1.54-.1-.25-.15-.51-.15-.79 0-1.28 1.05-2.33 2.33-2.33.98 0 1.81.61 2.16 1.45.11.28.17.57.17.88z"></path>
+        </svg>
+    </div>
 
- {filteredList.map((pokemon: Pokemon) => (
-  <PokemonCard key={pokemon.dex_number} style={{ backgroundColor: pokemon.isCaught ? 'lightgreen' : 'white' }}>
-  <CardContent className="flex block items-center">
-    <div className="flex block w-1/4 flex-direction column">
-        <svg version="1.1" width="25" height="25" viewBox="0 0 25 25" role="button" className={pokemon.isCaught ?  "animate-wiggle" : ""} onClick={() => handleCatchPokemon(pokemon.dex_number)}>
-            <path fill="#FFF" stroke="#000" stroke-width="2" stroke-miterlimit="10" d="M24 12.5C24 18.85 18.85 24 12.5 24c-4.92 0-9.11-3.09-10.75-7.42l8.57-3.29c.31.9 1.17 1.54 2.18 1.54 1.28 0 2.33-1.05 2.33-2.33 0-.31-.061-.6-.17-.88l8.55-3.3c.51 1.3.79 2.7.79 4.18z"></path>
-            <path fill={pokemon.isCaught ? "red" : "gray"} stroke="#000" stroke-width="2" stroke-miterlimit="10" d="M23.21 8.32l-8.55 3.3a2.349 2.349 0 0 0-2.16-1.45c-1.28 0-2.33 1.05-2.33 2.33 0 .28.05.54.15.79l-8.57 3.29C1.26 15.31 1 13.94 1 12.5 1 6.15 6.15 1 12.5 1c4.88 0 9.05 3.04 10.71 7.32z"></path>
-            <path fill="#FFF" d="M14.83 12.5c0 1.28-1.05 2.33-2.33 2.33-1.01 0-1.87-.64-2.18-1.54-.1-.25-.15-.51-.15-.79 0-1.28 1.05-2.33 2.33-2.33.98 0 1.81.61 2.16 1.45.11.28.17.57.17.88z"></path>
-          </svg>
-    </div>
-    <div className="flex block w-1/6 flex-direction column">
-      </div>
-    <div id="mainContent" className="flex-grow items-stretch justify-content-center items-center">
-      <PokemonTypography variant="h5">{pokemon.name}</PokemonTypography>
-      <PokemonTypography fontWeight="bold">#: {pokemon.dex_number}</PokemonTypography>
-      <PokemonMedia image={pokemon.image_url} title={pokemon.name} />
+    <div className="flex-1 text-center ml-5">
+      <p className='capitalize font-bold'>{pokemon.name}</p>
+      <p className='font-bold'>#: {pokemon.dex_number}</p>
+      <img className='pokemon-media mx-auto' src={pokemon.image_url} title={pokemon.name} />
+      <div className="flex justify-center">
       <div className={classNames(styles['type-icon'], styles[String(pokemon.type_1)])}/>
-      <div className={classNames(styles['type-icon'], styles[String(pokemon.type_2)])} />
+      {/*hide type 2 icon if null*/}
+      {pokemon.type_2 ? (
+        <div className={classNames(styles['type-icon'], styles[String(pokemon.type_2)])} />
+      ) : null}
+</div>
     </div>
-  </CardContent>
-  </PokemonCard>
-  ))}
-</Root>   
-);
-};
+  </div>
+))}
+  </div>
+
+)}
+
 
 export default PokemonList;
