@@ -1,5 +1,7 @@
 # Welcome to the PokeTracker App!
+##Dev Notes
 
+I really enjoyed working on this project! I worked on this during the evening Sunday, Monday, and Tuesday. have completed the primary objective and the loading is being done through prisma. I did not complete user authentication but the routes to modify pokemon data exist.  
 ## Summary
 
 Gotta catch 'em all has been the goal of almost every Trainer since the days of Pokemon Red and Blue.
