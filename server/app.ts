@@ -1,10 +1,10 @@
 import express from "express";
-import { db } from "./prisma/db";
 import cors from "cors";
-
+import { PrismaClient } from "@prisma/client";
 
 const app = express();
-const port = 3001;
+const port = 3003;
+const prisma = new PrismaClient();
 
 app.use(
   cors({
@@ -17,3 +17,4 @@ app.use(
 app.listen(port, () => {
   console.log(`PokeTracker server listening on port ${port}`);
 });
+
