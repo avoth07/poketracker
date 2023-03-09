@@ -74,7 +74,7 @@ export const PokemonFilterContainer: React.FC<IPokemonProps> = ({setFilteredList
       ) &&
         //finally filter based on textbox content
         (pokemon.name.toLowerCase().includes(filterPokemon.toLowerCase()) || pokemon.dex_number.toString() === filterPokemon)
-    ));
+    ).sort((a: Pokemon, b:Pokemon) => a.dex_number - b.dex_number));
 
   };
   
