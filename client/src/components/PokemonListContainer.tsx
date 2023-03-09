@@ -2,26 +2,31 @@ import React, { useEffect, useState} from 'react';
 import { Pokemon } from '../Pokemon';
 import PokemonCard from './PokemonCard';
 import { PokemonFilterContainer } from './PokemonFilterContainer';
-import { getAllPokemon } from '../../../server/services/pokemonService'
+
 
 const PokemonList: React.FC = () => {
   //state
   const [pokemonCollection, setPokemonCollection] = useState<number[]>([]);
   const [filteredList, setFilteredList] = useState<any[]>([]);
-  
   //handle returned value from PokemonCard component
   const handleSetPokemonCollection = (collection: any) => {
     setPokemonCollection(collection);
   };
 
-  //load all pokemon on mount
-  useEffect(() => {
-    async function loadPokemon() {
-      const pokemonList = await getAllPokemon();
-      setFilteredList(pokemonList);
-    }
-    loadPokemon();
-  }, []);
+   // load pokemon data in
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3003/api/pokemon');
+        const data = await response.json();
+        setFilteredList(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [setFilteredList]);
 
   //gather count statistics
   const totalCount = filteredList.length;
@@ -40,7 +45,7 @@ return (
   )}
 </div>
 {filteredList.map((pokemon: Pokemon ) => (
-  <PokemonCard pokemon={pokemon} pokemonCollection={pokemonCollection} setPokemonCollection={handleSetPokemonCollection}/>
+  <PokemonCard key={pokemon.dex_number} pokemon={pokemon} pokemonCollection={pokemonCollection} setPokemonCollection={handleSetPokemonCollection}/>
 ))}
   </div>
 

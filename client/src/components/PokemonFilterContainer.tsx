@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Pokemon } from "../Pokemon";
-import { pokemonData } from '../data/pokemon';
 
 interface IPokemonProps {
     setFilteredList: React.Dispatch<React.SetStateAction<any>[]>;
@@ -11,7 +10,7 @@ export const PokemonFilterContainer: React.FC<IPokemonProps> = ({setFilteredList
     const [type1Filter, setType1Filter] = useState<string>('Any');
     const [type2Filter, setType2Filter] = useState<string>('Any');
     const [typeOrderChecked, setTypeOrderChecked] = useState<boolean>(true);
-
+    const [pokemonData, setPokemonData] = useState<any[]>([]);
     const handleFilterChange = (event: any) => {
     setFilterPokemon(event.target.value);
     };
@@ -29,7 +28,7 @@ export const PokemonFilterContainer: React.FC<IPokemonProps> = ({setFilteredList
     };
 
     useEffect(() => {
-        pokemonFilterReducer(setFilteredList);
+        pokemonFilter(setFilteredList);
       },
        [type1Filter,
         type2Filter,
@@ -38,7 +37,23 @@ export const PokemonFilterContainer: React.FC<IPokemonProps> = ({setFilteredList
         ]
     );
 
-    const pokemonFilterReducer = (setFilteredListProp: React.Dispatch<React.SetStateAction<Pokemon>[]>) => {
+   // load pokemon data in
+      useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://localhost:3003/api/pokemon');
+          const data = await response.json();
+          setPokemonData(data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchData();
+    }, [setFilteredList]);
+
+
+    const pokemonFilter = (setFilteredListProp: React.Dispatch<React.SetStateAction<Pokemon>[]>) => {
         setFilteredListProp(pokemonData.filter((pokemon: Pokemon) =>
       (
         (typeOrderChecked) &&
@@ -117,3 +132,4 @@ return (
   </div>
 </div>
 )};
+
