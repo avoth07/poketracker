@@ -1,5 +1,6 @@
 # Welcome to the PokeTracker App!
 ## Dev Notes
+3/9 Update. Spent a little more time last night to get auth and endpoints working.
 
 I really enjoyed working on this project! I worked on this during the evening Sunday, Monday, and Tuesday. have completed the primary objective and the loading is being done through prisma. I did not complete user authentication but the routes to modify pokemon data exist.  
 ## Summary
